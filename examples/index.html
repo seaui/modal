@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>SeaUi Plugin Demo</title>
+    <link rel="stylesheet" href="../sea-modules/seaui/base/1.0.0/base.css" />
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-2">
+            <div class="page-header">
+                <h1>SeaUi Plugin Demo</h1>
+            </div>
+            <div class="section">
+                <h2>弹出窗口测试</h2>
+                <p>
+                    <button type="button" class="btn btn-primary btn-lg" id="btnDialog" >点击弹出窗口</button>
+                </p>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="../sea-modules/seajs/seajs/2.1.1/sea.js" id="seajsnode"></script>
+<script src="../sea-modules/seajs/seajs-style/1.0.2/seajs-style.js" ></script>
+<script type="text/javascript">
+    seajs.config({
+        alias:{
+            "$": "jquery/jquery/1.10.1/jquery",
+            "modal": "../src/modal",
+            "transition": "seaui/transition/1.0.0/transition"
+        }
+    });
+
+    // For development
+    if (location.href.indexOf("?dev") > 0) {
+        seajs.use("./index.js");
+    }
+    // For production
+    else {
+        seajs.use(["seaui/modal/1.0.0/modal", "$"],function(m, $){
+            var $modal = m.init({id: '00', buttonText: {ok: '确定', cancel: '取消'}, content: 'hello world!', title: '提示'},function() {
+                alert('ok');
+            });
+            $(function() {
+                $('#btnDialog').bind('click', function () {
+                    $modal.modal('show');
+                })
+            });
+        });
+    }
+</script>
+</body>
+</html>
